@@ -124,10 +124,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .hint-btn{background:var(--btn);border:1.5px solid var(--accent);border-radius:8px;padding:3px 8px;font-size:10px;font-weight:600;cursor:pointer;color:var(--accent);white-space:nowrap;flex-shrink:0}
 .hint-btn:disabled{opacity:.35;cursor:default;border-color:var(--txt2);color:var(--txt2)}
 .hint-btn:active:not(:disabled){transform:scale(.92)}
+
+/* Background Decorations */
+.bg-deco{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.bg-orb{position:absolute;border-radius:50%;animation:orbPulse 6s ease-in-out infinite}
+.bg-p{position:absolute;border-radius:50%;opacity:0}
+@keyframes orbPulse{0%,100%{transform:scale(1);opacity:.06}50%{transform:scale(1.2);opacity:.16}}
+@keyframes pRise{0%{transform:translateY(0) scale(.5);opacity:0}8%{opacity:.45;transform:translateY(-5vh) scale(1)}90%{opacity:.2}100%{transform:translateY(-105vh) scale(.6);opacity:0}}
+@keyframes pFall{0%{transform:translateY(0) scale(.5);opacity:0}8%{opacity:.4;transform:translateY(5vh) scale(1)}90%{opacity:.15}100%{transform:translateY(105vh) scale(.6);opacity:0}}
+@keyframes pDrift{0%,100%{transform:translate(0,0);opacity:.15}25%{transform:translate(8px,-12px);opacity:.35}50%{transform:translate(-5px,-20px);opacity:.25}75%{transform:translate(-12px,-6px);opacity:.4}}
 </style>
 </head>
 <body>
 <div class="box">
+<div class="bg-deco" id="bg-deco"></div>
 
 <!-- MAIN MENU -->
 <div class="scr" id="scr-menu">
@@ -503,6 +513,9 @@ function showScreen(id){
     if(id==='freeplay')renderFreePlay();
     if(id==='timed')renderTimed();
     if(id!=='game')resetTheme();
+    if(id==='menu'||id==='chapters'||id==='shop')setDeco('menu');
+    else if(id==='freeplay')setDeco('free');
+    else if(id==='timed')setDeco('timed');
 }
 
 function updateBalances(){
@@ -555,6 +568,7 @@ function showLevels(ci){
         b.addEventListener('click',()=>{if(unlocked)startCampaignLevel(ci,li)});
         el.appendChild(b);
     });
+    setDeco(ci);
     showScreen('levels');
 }
 
@@ -574,6 +588,7 @@ function startCampaignLevel(ci,li){
     document.getElementById('gr').style.gridTemplateColumns='repeat('+SZ+',1fr)';
     applyChapterTheme(ci);
     stopTimer();showTimerEl(false);
+    setDeco(ci);
     showScreen('game');
     setTimeout(()=>{render();updateSC();updateHintBtn()},50);
 }
@@ -910,11 +925,65 @@ function toggleTheme(){
     saveState();
 }
 
+// ===== BACKGROUND DECORATIONS =====
+const DECO={
+    menu:{
+        orbs:[[15,18,240,'102,126,234'],[78,12,190,'118,75,162'],[45,68,210,'240,147,251'],[82,78,160,'17,153,142']],
+        pts:{n:14,c:['102,126,234','118,75,162','240,147,251','255,255,255'],mode:'rise',sz:[2,5],glow:1}
+    },
+    0:{orbs:[[20,25,200,'129,199,132'],[72,55,180,'244,143,177'],[40,80,160,'255,245,157']],
+       pts:{n:10,c:['248,187,208','233,30,99','165,214,167','255,245,157'],mode:'fall',sz:[3,7],glow:0}},
+    1:{orbs:[[25,30,210,'79,195,247'],[68,55,180,'0,137,123'],[80,18,170,'38,198,218']],
+       pts:{n:12,c:['79,195,247','128,222,234','77,208,225','255,255,255'],mode:'rise',sz:[3,8],glow:1}},
+    2:{orbs:[[28,20,190,'174,213,129'],[62,70,175,'141,110,99'],[18,78,155,'102,187,106']],
+       pts:{n:10,c:['174,213,129','76,175,80','255,183,77','141,110,99'],mode:'fall',sz:[3,7],glow:0}},
+    3:{orbs:[[20,15,230,'126,87,194'],[72,28,185,'240,98,146'],[48,72,200,'66,165,245']],
+       pts:{n:18,c:['255,255,255','206,147,216','179,157,219','255,255,255'],mode:'drift',sz:[1,4],glow:1}},
+    4:{orbs:[[22,38,210,'229,57,53'],[68,22,185,'255,109,0'],[48,78,165,'255,143,0']],
+       pts:{n:14,c:['255,171,0','255,61,0','255,143,0','253,216,53'],mode:'rise',sz:[2,5],glow:1}},
+    5:{orbs:[[18,28,210,'106,27,154'],[72,18,175,'255,111,0'],[48,72,190,'74,20,140']],
+       pts:{n:12,c:['156,39,176','224,64,251','255,143,0','106,27,154'],mode:'rise',sz:[2,6],glow:1}},
+    6:{orbs:[[22,22,195,'198,40,40'],[68,68,185,'46,125,50'],[78,18,165,'255,215,0']],
+       pts:{n:16,c:['255,255,255','255,255,255','230,230,230','255,215,0'],mode:'fall',sz:[2,6],glow:0}},
+    7:{orbs:[[18,32,210,'13,71,161'],[72,22,185,'213,0,0'],[48,72,175,'255,214,0']],
+       pts:{n:13,c:['255,214,0','255,109,0','213,0,0','66,165,245'],mode:'rise',sz:[2,5],glow:1}},
+    8:{orbs:[[28,28,230,'183,28,28'],[62,58,195,'213,0,0'],[18,72,175,'255,61,0']],
+       pts:{n:16,c:['255,61,0','213,0,0','255,109,0','183,28,28'],mode:'rise',sz:[2,6],glow:1}},
+    9:{orbs:[[22,18,200,'187,222,251'],[68,48,185,'66,165,245'],[42,78,175,'255,248,225']],
+       pts:{n:14,c:['255,255,255','187,222,251','255,248,225','66,165,245'],mode:'fall',sz:[2,5],glow:1}},
+    free:{orbs:[[25,30,180,'17,153,142'],[72,52,165,'56,239,125']],
+          pts:{n:8,c:['17,153,142','56,239,125','255,255,255'],mode:'rise',sz:[2,4],glow:1}},
+    timed:{orbs:[[22,28,190,'255,109,0'],[72,52,170,'213,0,0'],[48,78,155,'255,61,0']],
+           pts:{n:12,c:['255,109,0','213,0,0','255,255,255','255,171,0'],mode:'rise',sz:[2,5],glow:1}}
+};
+function setDeco(theme){
+    let el=document.getElementById('bg-deco');if(!el)return;el.innerHTML='';
+    let d=DECO[theme]||DECO.menu;
+    d.orbs.forEach(function(o,i){
+        let v=document.createElement('div');v.className='bg-orb';
+        v.style.cssText='left:'+o[0]+'%;top:'+o[1]+'%;width:'+o[2]+'px;height:'+o[2]+'px;background:radial-gradient(circle,rgba('+o[3]+',.35) 0%,transparent 70%);animation-delay:'+i*2+'s';
+        el.appendChild(v);
+    });
+    let p=d.pts;
+    for(let i=0;i<p.n;i++){
+        let v=document.createElement('div');v.className='bg-p';
+        let x=4+Math.random()*92,sz=p.sz[0]+Math.random()*(p.sz[1]-p.sz[0]);
+        let dur=5+Math.random()*9,delay=-(Math.random()*dur);
+        let c=p.c[i%p.c.length];
+        let anim=p.mode==='fall'?'pFall':p.mode==='drift'?'pDrift':'pRise';
+        let startY=p.mode==='fall'?(-5-Math.random()*5):p.mode==='drift'?(10+Math.random()*80):(92+Math.random()*8);
+        let css='left:'+x+'%;top:'+startY+'%;width:'+sz+'px;height:'+sz+'px;background:rgba('+c+',.6);animation:'+anim+' '+dur+'s linear infinite;animation-delay:'+delay+'s';
+        if(p.glow)css+=';box-shadow:0 0 '+Math.round(sz*3)+'px rgba('+c+',.3)';
+        v.style.cssText=css;el.appendChild(v);
+    }
+}
+
 // ===== INIT =====
 loadState();
 if(!GS.dark)document.body.classList.add('light');
 else document.getElementById('tb').textContent='\u2600\ufe0f';
 updateBalances();
+setDeco('menu');
 window.addEventListener('resize',()=>sizeGrid());
 </script>
 </body>
