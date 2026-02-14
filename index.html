@@ -16,7 +16,7 @@ body.light{
 --btn:#f0f0f0;--panel:#f5f5f7;--zone-b:#333;--inner-b:rgba(0,0,0,.20);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));height:100vh;height:100dvh;display:flex;align-items:center;justify-content:center;padding:6px;color:var(--txt);overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));height:100vh;height:100dvh;display:flex;align-items:center;justify-content:center;padding:6px;color:var(--txt);overflow:hidden;transition:background .5s}
 .box{max-width:440px;width:100%;height:100%;background:var(--box);border-radius:14px;padding:8px 10px;box-shadow:0 12px 40px rgba(0,0,0,.25);position:relative;overflow:hidden}
 
 /* Screens */
@@ -41,7 +41,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .planet-bal{display:flex;align-items:center;gap:4px;background:var(--panel);padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;color:var(--accent)}
 
 /* Main Menu */
-.menu-title{font-size:28px;font-weight:800;color:var(--accent);margin:10px 0 4px}
+.menu-title{font-size:32px;font-weight:900;margin:10px 0 2px;background:linear-gradient(135deg,#667eea,#764ba2,#f093fb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .menu-sub{font-size:11px;color:var(--txt2);margin-bottom:16px}
 .menu-card{background:var(--panel);border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;transition:transform .15s;display:flex;align-items:center;gap:12px}
 .menu-card:active{transform:scale(.97)}
@@ -58,12 +58,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ch-card .ch-info{flex:1}
 .ch-card .ch-info h3{font-size:13px;margin-bottom:2px}
 .ch-card .ch-info p{font-size:9px;color:var(--txt2)}
-.ch-prog{display:flex;gap:3px;margin-top:4px}
-.ch-prog .dot{width:12px;height:12px;border-radius:50%;background:var(--btn);border:1.5px solid var(--txt2)}
+.ch-prog{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap}
+.ch-prog .dot{width:10px;height:10px;border-radius:50%;background:var(--btn);border:1.5px solid var(--txt2)}
 .ch-prog .dot.done{background:var(--accent);border-color:var(--accent)}
 
 /* Level Select */
-.lv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.lv-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
 .lv-btn{background:var(--panel);border:none;border-radius:10px;padding:14px 8px;cursor:pointer;color:var(--txt);font-weight:700;font-size:14px;position:relative;transition:transform .12s}
 .lv-btn:active{transform:scale(.94)}
 .lv-btn.done{border:2px solid var(--accent)}
@@ -91,6 +91,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .g-msg{text-align:center;padding:5px;border-radius:7px;font-weight:600;font-size:11px;flex-shrink:0;margin-top:4px}
 .g-msg.ok{background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff}
 .g-msg.err{background:#ff6b6b;color:#fff}
+
+/* Timer */
+.g-timer{background:var(--panel);padding:3px 8px;border-radius:7px;font-size:14px;font-weight:700;color:var(--accent);text-align:center;min-width:50px;display:none}
+.g-timer.active{display:block}
+.g-timer.danger{color:#ff3d00;animation:pulse .5s infinite alternate}
+@keyframes pulse{from{opacity:1}to{opacity:.5}}
+.timeup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:10;animation:fadeIn .4s}
+.timeup-text{font-size:28px;font-weight:800;color:#ff3d00}
+.timeup-sub{font-size:14px;color:#aaa}
 
 /* Shop */
 .skin-card{background:var(--panel);border-radius:10px;padding:10px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
@@ -123,20 +132,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <!-- MAIN MENU -->
 <div class="scr" id="scr-menu">
     <div class="row" style="margin-bottom:4px"><div class="f1"></div>
-        <div class="planet-bal" id="menu-bal">🪐 <span id="bal-num">0</span></div>
-        <button class="ib" onclick="toggleTheme()" id="tb" style="margin-left:4px">☀️</button>
+        <div class="planet-bal" id="menu-bal">&#x1FA90; <span id="bal-num">0</span></div>
+        <button class="ib" onclick="toggleTheme()" id="tb" style="margin-left:4px">&#9728;&#65039;</button>
     </div>
-    <div class="tc"><div class="menu-title">👑 Queens</div><div class="menu-sub">Posiziona le stelle nel puzzle</div></div>
+    <div class="tc"><div class="menu-title">Queens</div><div class="menu-sub">Il Puzzle delle Stelle</div></div>
     <div class="menu-card" onclick="showScreen('chapters')">
-        <div class="mc-icon" style="background:linear-gradient(135deg,#667eea,#764ba2)">🗺️</div>
-        <div class="mc-text"><h3>Campagna</h3><p>5 capitoli tematici · 30 livelli</p></div>
+        <div class="mc-icon" style="background:linear-gradient(135deg,#667eea,#764ba2)">&#x1F5FA;&#65039;</div>
+        <div class="mc-text"><h3>Campagna</h3><p>10 capitoli · 100 livelli</p></div>
+    </div>
+    <div class="menu-card" onclick="showScreen('timed')">
+        <div class="mc-icon" style="background:linear-gradient(135deg,#ff6d00,#d50000)">&#9201;&#65039;</div>
+        <div class="mc-text"><h3>Sfida a Tempo</h3><p>Contro il cronometro · Batti il tuo record</p></div>
     </div>
     <div class="menu-card" onclick="showScreen('freeplay')">
-        <div class="mc-icon" style="background:linear-gradient(135deg,#11998e,#38ef7d)">♾️</div>
+        <div class="mc-icon" style="background:linear-gradient(135deg,#11998e,#38ef7d)">&#9854;&#65039;</div>
         <div class="mc-text"><h3>Gioco Libero</h3><p>Puzzle infiniti · Scegli dimensione</p></div>
     </div>
     <div class="menu-card" onclick="showScreen('shop')">
-        <div class="mc-icon" style="background:linear-gradient(135deg,#f093fb,#f5576c)">✨</div>
+        <div class="mc-icon" style="background:linear-gradient(135deg,#f093fb,#f5576c)">&#10024;</div>
         <div class="mc-text"><h3>Negozio</h3><p>Stelle uniche · Personalizza il tuo stile</p></div>
     </div>
 </div>
@@ -144,9 +157,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <!-- CHAPTERS -->
 <div class="scr hide" id="scr-chapters">
     <div class="row" style="margin-bottom:8px">
-        <button class="ib" onclick="showScreen('menu')">←</button>
+        <button class="ib" onclick="showScreen('menu')">&#8592;</button>
         <h2 style="flex:1;text-align:center;font-size:16px;color:var(--accent)">Capitoli</h2>
-        <div class="planet-bal">🪐 <span class="bal-s">0</span></div>
+        <div class="planet-bal">&#x1FA90; <span class="bal-s">0</span></div>
     </div>
     <div id="ch-list"></div>
 </div>
@@ -154,9 +167,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <!-- LEVELS -->
 <div class="scr hide" id="scr-levels">
     <div class="row" style="margin-bottom:8px">
-        <button class="ib" onclick="showScreen('chapters')">←</button>
+        <button class="ib" onclick="showScreen('chapters')">&#8592;</button>
         <h2 style="flex:1;text-align:center;font-size:16px;color:var(--accent)" id="lv-title"></h2>
-        <div class="planet-bal">🪐 <span class="bal-s">0</span></div>
+        <div class="planet-bal">&#x1FA90; <span class="bal-s">0</span></div>
     </div>
     <div id="lv-grid" class="lv-grid"></div>
 </div>
@@ -164,51 +177,69 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <!-- GAME -->
 <div class="scr hide" id="scr-game" style="gap:4px">
     <div class="row" style="flex-shrink:0">
-        <button class="ib" onclick="exitGame()">←</button>
+        <button class="ib" onclick="exitGame()">&#8592;</button>
         <div style="flex:1;text-align:center;font-size:13px;font-weight:600" id="g-title"></div>
-        <div class="planet-bal" style="font-size:10px">🪐 <span class="bal-s">0</span></div>
+        <div class="planet-bal" style="font-size:10px">&#x1FA90; <span class="bal-s">0</span></div>
     </div>
     <div class="g-bar">
         <div class="g-stats">
             <div class="tc"><div class="g-sv" id="g-sc">0</div><div class="g-sl">Stelle</div></div>
             <div class="tc"><div class="g-sv" id="g-goal">8</div><div class="g-sl">Obiettivo</div></div>
         </div>
-        <button class="hint-btn" id="hint-btn" onclick="useHint()">💡 Aiuto</button>
+        <div class="g-timer" id="g-timer">0:00</div>
+        <button class="hint-btn" id="hint-btn" onclick="useHint()">&#128161; Aiuto</button>
         <div class="pill" style="padding:3px">
-            <button onclick="doZoom(-1)" style="width:28px;font-size:14px;font-weight:700">−</button>
-            <button onclick="doZoom(0)" style="width:28px;font-size:14px">↺</button>
+            <button onclick="doZoom(-1)" style="width:28px;font-size:14px;font-weight:700">&#8722;</button>
+            <button onclick="doZoom(0)" style="width:28px;font-size:14px">&#8634;</button>
         </div>
     </div>
     <div class="gw" id="gw"><div class="g" id="gr"></div></div>
     <div id="g-msg-area"></div>
     <div class="g-acts">
-        <button class="abtn sec" onclick="clearG()" style="font-size:12px">↻ Ricomincia</button>
-        <button class="abtn primary" onclick="check()" style="font-size:12px">✓ Verifica</button>
+        <button class="abtn sec" onclick="clearG()" style="font-size:12px">&#8635; Ricomincia</button>
+        <button class="abtn primary" onclick="check()" style="font-size:12px">&#10003; Verifica</button>
     </div>
 </div>
 
 <!-- FREE PLAY -->
 <div class="scr hide" id="scr-freeplay">
     <div class="row" style="margin-bottom:8px">
-        <button class="ib" onclick="showScreen('menu')">←</button>
+        <button class="ib" onclick="showScreen('menu')">&#8592;</button>
         <h2 style="flex:1;text-align:center;font-size:16px;color:var(--accent)">Gioco Libero</h2>
         <div class="f1"></div>
     </div>
     <div style="margin-bottom:8px"><div style="font-size:11px;color:var(--txt2);margin-bottom:4px">Dimensione griglia</div>
         <div class="pill" id="fp-size"></div>
     </div>
-    <div style="margin-bottom:12px"><div style="font-size:11px;color:var(--txt2);margin-bottom:4px">Difficoltà</div>
+    <div style="margin-bottom:12px"><div style="font-size:11px;color:var(--txt2);margin-bottom:4px">Difficolt&agrave;</div>
         <div class="pill" id="fp-diff"></div>
     </div>
-    <button class="abtn primary" onclick="startFreePlay()">🎲 Genera Puzzle</button>
+    <button class="abtn primary" onclick="startFreePlay()">&#127922; Genera Puzzle</button>
+</div>
+
+<!-- TIMED MODE -->
+<div class="scr hide" id="scr-timed">
+    <div class="row" style="margin-bottom:8px">
+        <button class="ib" onclick="showScreen('menu')">&#8592;</button>
+        <h2 style="flex:1;text-align:center;font-size:16px;color:var(--accent)">Sfida a Tempo</h2>
+        <div class="f1"></div>
+    </div>
+    <div style="margin-bottom:8px"><div style="font-size:11px;color:var(--txt2);margin-bottom:4px">Dimensione griglia</div>
+        <div class="pill" id="tm-size"></div>
+    </div>
+    <div style="margin-bottom:8px"><div style="font-size:11px;color:var(--txt2);margin-bottom:4px">Tempo limite</div>
+        <div class="pill" id="tm-time"></div>
+    </div>
+    <div id="tm-best" style="text-align:center;font-size:11px;color:var(--txt2);margin-bottom:12px"></div>
+    <button class="abtn primary" onclick="startTimed()">&#9201;&#65039; Inizia Sfida</button>
 </div>
 
 <!-- SHOP -->
 <div class="scr hide" id="scr-shop">
     <div class="row" style="margin-bottom:8px">
-        <button class="ib" onclick="showScreen('menu')">←</button>
+        <button class="ib" onclick="showScreen('menu')">&#8592;</button>
         <h2 style="flex:1;text-align:center;font-size:16px;color:var(--accent)">Negozio Stelle</h2>
-        <div class="planet-bal">🪐 <span class="bal-s">0</span></div>
+        <div class="planet-bal">&#x1FA90; <span class="bal-s">0</span></div>
     </div>
     <div id="shop-list"></div>
 </div>
@@ -220,7 +251,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 
 // ===== PUZZLE GENERATOR =====
-// Generate non-adjacent queen placement (no two queens in adjacent rows share adjacent columns)
 function genSolution(N,rng){
     let cols=new Array(N),used=new Uint8Array(N);
     function bt(r){
@@ -240,27 +270,21 @@ function genSolution(N,rng){
     return bt(0)?Array.from(cols):null;
 }
 
-// Generate zones via random spanning tree partitioning
 function genZones(N,sol,rng){
     let cells=N*N;
-    // Build all grid edges and shuffle
     let edges=[];
     for(let i=0;i<cells;i++){let r=Math.floor(i/N),c=i%N;if(c<N-1)edges.push([i,i+1]);if(r<N-1)edges.push([i,i+N])}
     for(let i=edges.length-1;i>0;i--){let j=Math.floor(rng()*(i+1));[edges[i],edges[j]]=[edges[j],edges[i]]}
-    // Kruskal's spanning tree
     let par=Array.from({length:cells},(_,i)=>i);
     function find(x){while(par[x]!==x){par[x]=par[par[x]];x=par[x]}return x}
     let treeAdj=Array.from({length:cells},()=>[]);
     for(let [a,b] of edges){if(find(a)!==find(b)){par[find(a)]=find(b);treeAdj[a].push(b);treeAdj[b].push(a)}}
-    // Star positions
     let starSet=new Set();
     for(let i=0;i<N;i++)starSet.add(i*N+sol[i]);
-    // Root tree, BFS to get parent + order
     let treeParent=new Int16Array(cells).fill(-1);
     let order=[];let visited=new Uint8Array(cells);
     let stack=[0];visited[0]=1;
     while(stack.length){let u=stack.pop();order.push(u);for(let v of treeAdj[u])if(!visited[v]){visited[v]=1;treeParent[v]=u;stack.push(v)}}
-    // Bottom-up: count stars, cut when subtree has exactly 1 star (limit N-1 cuts)
     let effectiveStars=new Uint8Array(cells);
     let cutEdges=new Set();let cutCount=0;
     for(let i=order.length-1;i>=0;i--){
@@ -269,7 +293,6 @@ function genZones(N,sol,rng){
         for(let v of treeAdj[u])if(treeParent[v]===u&&!cutEdges.has(v))effectiveStars[u]+=effectiveStars[v];
         if(treeParent[u]!==-1&&effectiveStars[u]>=1&&effectiveStars[u]<N&&cutCount<N-1){cutEdges.add(u);cutCount++}
     }
-    // Component labeling
     let z=new Int8Array(cells).fill(-1);let zoneId=0;let vis2=new Uint8Array(cells);
     for(let start=0;start<cells;start++){
         if(vis2[start])continue;
@@ -284,7 +307,6 @@ function genZones(N,sol,rng){
     return z;
 }
 
-// Uniqueness checker with adjacency constraint
 function isUnique(N,z){
     let sols=0,placed=new Int8Array(N);
     function bt(r,uc,uz){
@@ -301,9 +323,10 @@ function isUnique(N,z){
     bt(0,0,0);return sols===1;
 }
 
-function genPuzzle(N,seed){
+function genPuzzle(N,seed,minZoneSize){
+    if(minZoneSize===undefined)minZoneSize=2;
     let rng=mulberry32(seed);
-    for(let a=0;a<500;a++){
+    for(let a=0;a<1500;a++){
         let sol=genSolution(N,rng);
         if(!sol)continue;
         let z=genZones(N,sol,rng);
@@ -311,6 +334,14 @@ function genPuzzle(N,seed){
         if(!ok)continue;
         let zoneCount=new Set(z).size;
         if(zoneCount!==N)continue;
+        // Check minZoneSize: at most 1 zone can have fewer than minZoneSize cells
+        if(minZoneSize>1){
+            let zoneSizes=new Array(N).fill(0);
+            for(let i=0;i<N*N;i++)zoneSizes[z[i]]++;
+            let smallCount=0;
+            for(let s of zoneSizes)if(s<minZoneSize)smallCount++;
+            if(smallCount>1)continue;
+        }
         if(isUnique(N,z)){
             let z2=[];for(let r=0;r<N;r++)z2.push(Array.from(z.slice(r*N,(r+1)*N)));
             return{zones:z2,solution:sol};
@@ -321,39 +352,72 @@ function genPuzzle(N,seed){
 
 // ===== CHAPTER STAR SVGs =====
 const CH_STARS=[
-    // Giardino: Fiore (flower with 5 petals + center)
+    // 0 Giardino: Fiore (flower with 5 petals + center)
     {id:'fiore',name:'Fiore',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f8bbd0"/><stop offset="100%" stop-color="#e91e63"/></linearGradient></defs><g transform="translate(12,12)"><ellipse cx="0" cy="-5.5" rx="2.8" ry="5" fill="url(#chf0)" opacity=".92"/><ellipse cx="0" cy="-5.5" rx="2.8" ry="5" fill="url(#chf0)" opacity=".88" transform="rotate(72)"/><ellipse cx="0" cy="-5.5" rx="2.8" ry="5" fill="url(#chf0)" opacity=".84" transform="rotate(144)"/><ellipse cx="0" cy="-5.5" rx="2.8" ry="5" fill="url(#chf0)" opacity=".88" transform="rotate(216)"/><ellipse cx="0" cy="-5.5" rx="2.8" ry="5" fill="url(#chf0)" opacity=".92" transform="rotate(288)"/><circle r="2.8" fill="#fff176" opacity=".9"/></g></svg>`},
-    // Oceano: Stella Marina (fat starfish)
+    // 1 Oceano: Stella Marina (fat starfish)
     {id:'marina',name:'Stella Marina',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#80deea"/><stop offset="100%" stop-color="#0277bd"/></linearGradient></defs><path d="M12 2L15.5 7.1L21.5 8.9L17.7 13.9L17.9 20.1L12 18L6.1 20.1L6.3 13.9L2.5 8.9L8.5 7.1Z" fill="url(#chf1)" stroke="#01579b" stroke-width=".5" stroke-linejoin="round"/><circle cx="12" cy="11.5" r="1.8" fill="rgba(255,255,255,.3)"/></svg>`},
-    // Foresta: Esagramma (6-pointed nature star)
+    // 2 Foresta: Foglia Magica (6-pointed nature star)
     {id:'foglia',name:'Foglia Magica',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#aed581"/><stop offset="100%" stop-color="#33691e"/></linearGradient></defs><path d="M12 2L14.9 7L20.7 7L17.8 12L20.7 17L14.9 17L12 22L9.1 17L3.3 17L6.2 12L3.3 7L9.1 7Z" fill="url(#chf2)" stroke="#1b5e20" stroke-width=".5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.2" fill="#c8e6c9" opacity=".6"/></svg>`},
-    // Cosmo: Stella Cosmica (8-pointed thin burst)
+    // 3 Cosmo: Stella Cosmica (8-pointed thin burst)
     {id:'cosmica',name:'Stella Cosmica',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ce93d8"/><stop offset="100%" stop-color="#4a148c"/></linearGradient></defs><path d="M12 2L13.5 8.3L19.1 4.9L15.7 10.5L22 12L15.7 13.5L19.1 19.1L13.5 15.7L12 22L10.5 15.7L4.9 19.1L8.3 13.5L2 12L8.3 10.5L4.9 4.9L10.5 8.3Z" fill="url(#chf3)" stroke="#6a1b9a" stroke-width=".4" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.5" fill="#e1bee7" opacity=".7"/></svg>`},
-    // Vulcano: Fiamma (sharp aggressive star)
-    {id:'fiamma',name:'Fiamma',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffab00"/><stop offset="50%" stop-color="#ff3d00"/><stop offset="100%" stop-color="#b71c1c"/></linearGradient></defs><path d="M12 2L13.8 9.6L21.5 8.9L14.9 12.9L17.9 20.1L12 15L6.1 20.1L9.1 12.9L2.5 8.9L10.2 9.6Z" fill="url(#chf4)" stroke="#4a0000" stroke-width=".6" stroke-linejoin="round"/><circle cx="12" cy="11" r="1.3" fill="#fff8e1" opacity=".7"/></svg>`}
+    // 4 Vulcano: Fiamma (sharp aggressive star)
+    {id:'fiamma',name:'Fiamma',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffab00"/><stop offset="50%" stop-color="#ff3d00"/><stop offset="100%" stop-color="#b71c1c"/></linearGradient></defs><path d="M12 2L13.8 9.6L21.5 8.9L14.9 12.9L17.9 20.1L12 15L6.1 20.1L9.1 12.9L2.5 8.9L10.2 9.6Z" fill="url(#chf4)" stroke="#4a0000" stroke-width=".6" stroke-linejoin="round"/><circle cx="12" cy="11" r="1.3" fill="#fff8e1" opacity=".7"/></svg>`},
+    // 5 Halloween: Ragnatela (8-pointed spider-web star)
+    {id:'ragno',name:'Ragnatela',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#9c27b0"/><stop offset="100%" stop-color="#1a0a2a"/></linearGradient></defs><path d="M12,2 L13.7,7.8 L19.1,4.9 L16.2,10.3 L22,12 L16.2,13.7 L19.1,19.1 L13.7,16.2 L12,22 L10.3,16.2 L4.9,19.1 L7.8,13.7 L2,12 L7.8,10.3 L4.9,4.9 L10.3,7.8Z" fill="url(#chf5)" stroke="#4a148c" stroke-width=".5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="#e040fb" opacity=".5"/></svg>`},
+    // 6 Natale: Stella di Betlemme (4 long + 4 short points)
+    {id:'betlemme',name:'Stella di Betlemme',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#c62828"/></linearGradient></defs><path d="M12,2 L13.2,9.2 L16.2,7.8 L14.8,10.9 L22,12 L14.8,13.2 L16.2,16.2 L13.2,14.8 L12,22 L10.9,14.8 L7.8,16.2 L9.2,13.2 L2,12 L9.2,10.9 L7.8,7.8 L10.9,9.2Z" fill="url(#chf6)" stroke="#b71c1c" stroke-width=".5" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.8" fill="#fff8e1" opacity=".8"/></svg>`},
+    // 7 Draghi: Scudo del Drago (aggressive multi-pointed)
+    {id:'drago',name:'Scudo del Drago',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf7" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff6d00"/><stop offset="50%" stop-color="#d50000"/><stop offset="100%" stop-color="#0d47a1"/></linearGradient></defs><path d="M12,1 L14,7 L21,5 L16,11 L23,14 L16,15 L18,22 L12,17 L6,22 L8,15 L1,14 L8,11 L3,5 L10,7Z" fill="url(#chf7)" stroke="#1a237e" stroke-width=".5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="#ffd600" opacity=".6"/></svg>`},
+    // 8 Inferno: Fiamme Infernali (flame tongues)
+    {id:'inferno',name:'Fiamme Infernali',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf8" x1=".5" y1="0" x2=".5" y2="1"><stop offset="0%" stop-color="#ff6d00"/><stop offset="50%" stop-color="#d50000"/><stop offset="100%" stop-color="#1a0000"/></linearGradient></defs><path d="M12,1 L14,6 L17,3 L15.5,9 L21,7 L17,13 L22,16 L16,16 L18,22 L12,18 L6,22 L8,16 L2,16 L7,13 L3,7 L8.5,9 L7,3 L10,6Z" fill="url(#chf8)" stroke="#4a0000" stroke-width=".5" stroke-linejoin="round"/><circle cx="12" cy="13" r="1.5" fill="#ffab00" opacity=".6"/></svg>`},
+    // 9 Paradiso: Stella Celeste (gentle 6-pointed)
+    {id:'celeste',name:'Stella Celeste',svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="chf9" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#bbdefb"/><stop offset="100%" stop-color="#42a5f5"/></linearGradient></defs><path d="M12,2 L14.5,8.5 L20.7,7 L17,12 L20.7,17 L14.5,15.5 L12,22 L9.5,15.5 L3.3,17 L7,12 L3.3,7 L9.5,8.5Z" fill="url(#chf9)" stroke="#1565c0" stroke-width=".4" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.5" fill="rgba(255,255,255,.5)"/></svg>`}
 ];
 
 // ===== CHAPTERS & THEMES =====
 const THEMES=[
-    {name:'Giardino',icon:'🌸',bg:['#1a2e1a','#0d1f0d'],accent:'#81c784',starIdx:0,
+    {name:'Giardino',icon:'\u{1F338}',bg:['#1a2e1a','#0d1f0d'],accent:'#81c784',starIdx:0,
      zc:['#e8a0b4','#a5d6a7','#fff59d','#80cbc4','#f0f4c3','#ffab91','#ce93d8','#90caf9','#ffe082','#a5d6a7','#f48fb1','#80deea']},
-    {name:'Oceano',icon:'🐚',bg:['#0d1b2a','#1b2838'],accent:'#4fc3f7',starIdx:1,
+    {name:'Oceano',icon:'\u{1F41A}',bg:['#0d1b2a','#1b2838'],accent:'#4fc3f7',starIdx:1,
      zc:['#4fc3f7','#00897b','#26c6da','#80deea','#0d47a1','#ef9a9a','#b0bec5','#4dd0e1','#00acc1','#ffe0b2','#69f0ae','#64b5f6']},
-    {name:'Foresta',icon:'🌿',bg:['#1b2416','#0f1a0a'],accent:'#aed581',starIdx:2,
+    {name:'Foresta',icon:'\u{1F33F}',bg:['#1b2416','#0f1a0a'],accent:'#aed581',starIdx:2,
      zc:['#558b2f','#8d6e63','#ffb74d','#827717','#bf360c','#689f38','#795548','#66bb6a','#ffd54f','#4e342e','#33691e','#a1887f']},
-    {name:'Cosmo',icon:'🌌',bg:['#1a0a2e','#0d0520'],accent:'#b39ddb',starIdx:3,
+    {name:'Cosmo',icon:'\u{1F30C}',bg:['#1a0a2e','#0d0520'],accent:'#b39ddb',starIdx:3,
      zc:['#7e57c2','#f06292','#42a5f5','#00838f','#ff7043','#311b92','#5c6bc0','#26a69a','#ffa726','#37474f','#ab47bc','#78909c']},
-    {name:'Vulcano',icon:'🌋',bg:['#2a0a0a','#1a0505'],accent:'#ff7043',starIdx:4,
-     zc:['#e53935','#ff6d00','#424242','#757575','#ff8f00','#fdd835','#9e9e9e','#455a64','#616161','#c62828','#5d4037','#ef6c00']}
+    {name:'Vulcano',icon:'\u{1F30B}',bg:['#2a0a0a','#1a0505'],accent:'#ff7043',starIdx:4,
+     zc:['#e53935','#ff6d00','#424242','#757575','#ff8f00','#fdd835','#9e9e9e','#455a64','#616161','#c62828','#5d4037','#ef6c00']},
+    {name:'Halloween',icon:'\u{1F383}',bg:['#1a0a2a','#0d0520'],accent:'#ff8f00',starIdx:5,
+     zc:['#6a1b9a','#ff6f00','#1a0a2a','#4a148c','#e65100','#311b92','#ff8f00','#4527a0','#bf360c','#9c27b0','#e040fb','#212121']},
+    {name:'Natale',icon:'\u{1F384}',bg:['#1b0a0a','#0a1a0a'],accent:'#c62828',starIdx:6,
+     zc:['#c62828','#2e7d32','#ffd700','#ffffff','#b71c1c','#1b5e20','#ffab00','#e8e8e8','#d32f2f','#388e3c','#f9a825','#4caf50']},
+    {name:'Citt\u00e0 dei Draghi',icon:'\u{1F409}',bg:['#0a0a2a','#1a0a0a'],accent:'#ffd600',starIdx:7,
+     zc:['#0d47a1','#d50000','#ffd600','#1565c0','#b71c1c','#ffab00','#1a237e','#ff6d00','#283593','#e53935','#f9a825','#42a5f5']},
+    {name:'Inferno',icon:'\u{1F525}',bg:['#1a0000','#0a0000'],accent:'#ff3d00',starIdx:8,
+     zc:['#b71c1c','#212121','#4a0000','#d50000','#424242','#ff3d00','#1a0000','#616161','#e53935','#37474f','#ff6d00','#263238']},
+    {name:'Paradiso',icon:'\u2728',bg:['#e8eaf6','#bbdefb'],accent:'#1565c0',starIdx:9,light:true,
+     zc:['#e3f2fd','#f3e5f5','#fff8e1','#e8f5e9','#fce4ec','#e1f5fe','#f9fbe7','#ede7f6','#fff3e0','#e0f7fa','#f1f8e9','#fafafa']}
 ];
+
+const CHAP_SIZES=[
+    [4,4,4,5,5,5,5,6,6,6],
+    [5,5,5,6,6,6,7,7,7,7],
+    [6,6,6,7,7,7,8,8,8,8],
+    [7,7,7,8,8,8,9,9,9,9],
+    [8,8,8,9,9,9,10,10,10,10],
+    [8,9,9,9,10,10,10,10,11,11],
+    [9,9,9,10,10,10,10,11,11,11],
+    [9,9,10,10,10,11,11,11,11,12],
+    [10,10,10,11,11,11,11,12,12,12],
+    [10,10,11,11,11,12,12,12,12,12]
+];
+const CHAP_MINZONE=[3,3,2,2,2,2,1,1,1,1];
 
 const CHAPS=THEMES.map((t,ci)=>{
     let levels=[];
-    const sizeMap=[[4,4,4,5,5,5],[5,5,6,6,6,6],[6,7,7,8,8,8],[8,8,9,9,10,10],[10,10,11,11,12,12]];
-    for(let li=0;li<6;li++){
-        levels.push({size:sizeMap[ci][li],seed:ci*10000+li*137+42});
+    for(let li=0;li<10;li++){
+        levels.push({size:CHAP_SIZES[ci][li],seed:ci*10000+li*137+42});
     }
-    return{...t,levels,id:ci};
+    return{...t,levels,id:ci,minZone:CHAP_MINZONE[ci]};
 });
 
 // ===== STAR SKINS =====
@@ -365,6 +429,11 @@ const SKINS=[
     {id:CH_STARS[2].id,name:CH_STARS[2].name,price:0,chapter:2,svg:CH_STARS[2].svg},
     {id:CH_STARS[3].id,name:CH_STARS[3].name,price:0,chapter:3,svg:CH_STARS[3].svg},
     {id:CH_STARS[4].id,name:CH_STARS[4].name,price:0,chapter:4,svg:CH_STARS[4].svg},
+    {id:CH_STARS[5].id,name:CH_STARS[5].name,price:0,chapter:5,svg:CH_STARS[5].svg},
+    {id:CH_STARS[6].id,name:CH_STARS[6].name,price:0,chapter:6,svg:CH_STARS[6].svg},
+    {id:CH_STARS[7].id,name:CH_STARS[7].name,price:0,chapter:7,svg:CH_STARS[7].svg},
+    {id:CH_STARS[8].id,name:CH_STARS[8].name,price:0,chapter:8,svg:CH_STARS[8].svg},
+    {id:CH_STARS[9].id,name:CH_STARS[9].name,price:0,chapter:9,svg:CH_STARS[9].svg},
     {id:'diamond',name:'Diamante',price:10,chapter:-1,
      svg:`<svg viewBox="0 0 24 24"><defs><linearGradient id="sk1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e3f2fd"/><stop offset="50%" stop-color="#42a5f5"/><stop offset="100%" stop-color="#0d47a1"/></linearGradient></defs><path d="M12 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L12 14.1l-4.8 2.5.9-5.3L4.3 7.6l5.3-.8z" fill="url(#sk1)" stroke="#01579b" stroke-width=".6" stroke-linejoin="round"/></svg>`},
     {id:'rainbow',name:'Arcobaleno',price:20,chapter:-1,
@@ -377,15 +446,18 @@ const SKINS=[
 const PLANET_SVG=`<svg viewBox="0 0 64 64" width="100%" height="100%"><circle cx="32" cy="32" r="26" fill="url(#pg)"/><ellipse cx="32" cy="32" rx="38" ry="8" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2.5" transform="rotate(-20 32 32)"/><circle cx="24" cy="24" r="6" fill="rgba(255,255,255,.15)"/><defs><radialGradient id="pg" cx=".3" cy=".3"><stop offset="0%" stop-color="#7c4dff"/><stop offset="100%" stop-color="#311b92"/></radialGradient></defs></svg>`;
 
 // ===== GAME STATE =====
-let GS={completed:{},planets:0,skins:['gold'],activeSkin:'gold',dark:true,lastHint:0};
-function loadState(){try{let s=localStorage.getItem('queens_gs');if(s){GS=JSON.parse(s);if(!GS.lastHint)GS.lastHint=0}}catch(e){}}
+let GS={completed:{},planets:0,skins:['gold'],activeSkin:'gold',dark:true,lastHint:0,bestTimes:{}};
+function loadState(){try{let s=localStorage.getItem('queens_gs');if(s){GS=JSON.parse(s);if(!GS.lastHint)GS.lastHint=0;if(!GS.bestTimes)GS.bestTimes={}}}catch(e){}}
 function saveState(){localStorage.setItem('queens_gs',JSON.stringify(GS))}
 function isLevelDone(ch,lv){return GS.completed[ch+'_'+lv]||false}
-function isChapterDone(ch){for(let i=0;i<6;i++)if(!GS.completed[ch+'_'+i])return false;return true}
+function isChapterDone(ch){
+    let len=CHAPS[ch].levels.length;
+    for(let i=0;i<len;i++)if(!GS.completed[ch+'_'+i])return false;
+    return true;
+}
 function completeLevel(ch,lv){
     let key=ch+'_'+lv;
     if(!GS.completed[key]){GS.completed[key]=true;GS.planets++;
-        // Chapter complete bonus: +5 planets + unlock chapter star skin
         if(isChapterDone(ch)){
             GS.planets+=5;
             let starId=CH_STARS[ch].id;
@@ -396,23 +468,21 @@ function completeLevel(ch,lv){
 }
 
 // ===== HINT SYSTEM =====
-const HINT_COOLDOWN=5*60*1000; // 5 minutes
+const HINT_COOLDOWN=5*60*1000;
 function canHint(){return Date.now()-GS.lastHint>=HINT_COOLDOWN}
 function hintCooldownLeft(){return Math.max(0,HINT_COOLDOWN-(Date.now()-GS.lastHint))}
 function updateHintBtn(){
     let btn=document.getElementById('hint-btn');if(!btn)return;
-    if(canHint()){btn.disabled=false;btn.textContent='💡 Aiuto'}
-    else{btn.disabled=true;let left=Math.ceil(hintCooldownLeft()/60000);btn.textContent='💡 '+left+'min'}
+    if(canHint()){btn.disabled=false;btn.textContent='\u{1F4A1} Aiuto'}
+    else{btn.disabled=true;let left=Math.ceil(hintCooldownLeft()/60000);btn.textContent='\u{1F4A1} '+left+'min'}
 }
 function useHint(){
     if(!canHint()||!curSolution)return;
-    // Find a correct star position not yet placed
     let empty=[];
     for(let r=0;r<SZ;r++){if(grid[r][curSolution[r]]!==2)empty.push(r)}
     if(!empty.length)return;
     let r=empty[Math.floor(Math.random()*empty.length)];
     let c=curSolution[r];
-    // Clear existing state on that cell
     if(grid[r][c]===2)rmAutoX(r,c);
     grid[r][c]=2;autoX(r,c);
     GS.lastHint=Date.now();saveState();
@@ -431,6 +501,8 @@ function showScreen(id){
     if(id==='chapters')renderChapters();
     if(id==='shop')renderShop();
     if(id==='freeplay')renderFreePlay();
+    if(id==='timed')renderTimed();
+    if(id!=='game')resetTheme();
 }
 
 function updateBalances(){
@@ -438,18 +510,31 @@ function updateBalances(){
     document.querySelectorAll('.bal-s').forEach(e=>e.textContent=GS.planets);
 }
 
+// ===== CHAPTER THEME =====
+function applyChapterTheme(ci){
+    let t=CHAPS[ci];
+    document.body.style.background='linear-gradient(135deg,'+t.bg[0]+','+t.bg[1]+')';
+}
+function resetTheme(){
+    document.body.style.background='';
+}
+
 // ===== CHAPTERS SCREEN =====
 function renderChapters(){
     let el=document.getElementById('ch-list');el.innerHTML='';
     CHAPS.forEach((ch,ci)=>{
-        let unlocked=ci===0||CHAPS[ci-1].levels.every((_,li)=>isLevelDone(ci-1,li));
-        // Also unlock if at least 4 of prev chapter done
-        if(ci>0){let done=0;for(let i=0;i<6;i++)if(isLevelDone(ci-1,i))done++;if(done>=4)unlocked=true}
-        let doneCount=0;for(let i=0;i<6;i++)if(isLevelDone(ci,i))doneCount++;
+        let len=ch.levels.length;
+        let unlocked=ci===0;
+        if(ci>0){
+            let prevLen=CHAPS[ci-1].levels.length;
+            let done=0;for(let i=0;i<prevLen;i++)if(isLevelDone(ci-1,i))done++;
+            if(done>=Math.ceil(prevLen*0.7))unlocked=true;
+        }
+        let doneCount=0;for(let i=0;i<len;i++)if(isLevelDone(ci,i))doneCount++;
         let d=document.createElement('div');
         d.className='ch-card'+(unlocked?'':' locked');
         d.innerHTML=`<div class="ch-icon" style="background:linear-gradient(135deg,${ch.bg[0]},${ch.bg[1]})">${ch.icon}</div>
-            <div class="ch-info"><h3>${ch.name}</h3><p>${ch.levels[0].size}×${ch.levels[0].size} → ${ch.levels[5].size}×${ch.levels[5].size} · ${doneCount}/6</p>
+            <div class="ch-info"><h3>${ch.name}</h3><p>${ch.levels[0].size}\u00d7${ch.levels[0].size} \u2192 ${ch.levels[len-1].size}\u00d7${ch.levels[len-1].size} \u00b7 ${doneCount}/${len}</p>
             <div class="ch-prog">${ch.levels.map((_,i)=>`<div class="dot${isLevelDone(ci,i)?' done':''}"></div>`).join('')}</div></div>`;
         d.addEventListener('click',()=>{if(unlocked){curChapter=ci;showLevels(ci)}});
         el.appendChild(d);
@@ -466,7 +551,7 @@ function showLevels(ci){
         let unlocked=li===0||isLevelDone(ci,li-1);
         let b=document.createElement('button');
         b.className='lv-btn'+(done?' done':'')+(unlocked?'':' locked');
-        b.innerHTML=`${li+1}<div class="lv-size">${lv.size}×${lv.size}</div>`;
+        b.innerHTML=`${li+1}<div class="lv-size">${lv.size}\u00d7${lv.size}</div>`;
         b.addEventListener('click',()=>{if(unlocked)startCampaignLevel(ci,li)});
         el.appendChild(b);
     });
@@ -479,14 +564,16 @@ let SZ=8,grid=[],zones=[],zLvl=0,gameMode='campaign',gameCh=0,gameLv=0,curSoluti
 function startCampaignLevel(ci,li){
     gameMode='campaign';gameCh=ci;gameLv=li;
     let lv=CHAPS[ci].levels[li];SZ=lv.size;
-    let puz=genPuzzle(SZ,lv.seed);
+    let puz=genPuzzle(SZ,lv.seed,CHAPS[ci].minZone);
     if(!puz){alert('Errore generazione');return}
     zones=puz.zones;curSolution=puz.solution;
     grid=Array.from({length:SZ},()=>Array(SZ).fill(0));
     zLvl=0;
-    document.getElementById('g-title').textContent=`${CHAPS[ci].icon} ${CHAPS[ci].name} · Livello ${li+1}`;
+    document.getElementById('g-title').textContent=CHAPS[ci].icon+' '+CHAPS[ci].name+' \u00b7 Livello '+(li+1);
     document.getElementById('g-goal').textContent=SZ;
-    document.getElementById('gr').style.gridTemplateColumns=`repeat(${SZ},1fr)`;
+    document.getElementById('gr').style.gridTemplateColumns='repeat('+SZ+',1fr)';
+    applyChapterTheme(ci);
+    stopTimer();showTimerEl(false);
     showScreen('game');
     setTimeout(()=>{render();updateSC();updateHintBtn()},50);
 }
@@ -495,7 +582,7 @@ let fpSize=8,fpDiff=1;
 function renderFreePlay(){
     let se=document.getElementById('fp-size');se.innerHTML='';
     [4,5,6,7,8,9,10,11,12].forEach(s=>{
-        let b=document.createElement('button');b.textContent=s+'×'+s;
+        let b=document.createElement('button');b.textContent=s+'\u00d7'+s;
         if(s===fpSize)b.classList.add('on');
         b.addEventListener('click',()=>{fpSize=s;renderFreePlay()});
         se.appendChild(b);
@@ -511,38 +598,121 @@ function renderFreePlay(){
 
 function startFreePlay(){
     gameMode='free';SZ=fpSize;
+    let minZ=[3,2,1][fpDiff]||2;
     let seed=Date.now()^(Math.random()*1e9|0);
-    let puz=genPuzzle(SZ,seed);
+    let puz=genPuzzle(SZ,seed,minZ);
     if(!puz){alert('Riprova');return}
     zones=puz.zones;curSolution=puz.solution;
     grid=Array.from({length:SZ},()=>Array(SZ).fill(0));
     zLvl=0;
-    document.getElementById('g-title').textContent=`♾️ Libero · ${SZ}×${SZ}`;
+    document.getElementById('g-title').textContent='\u267e\ufe0f Libero \u00b7 '+SZ+'\u00d7'+SZ;
     document.getElementById('g-goal').textContent=SZ;
-    document.getElementById('gr').style.gridTemplateColumns=`repeat(${SZ},1fr)`;
+    document.getElementById('gr').style.gridTemplateColumns='repeat('+SZ+',1fr)';
+    resetTheme();stopTimer();showTimerEl(false);
     showScreen('game');
     setTimeout(()=>{render();updateSC();updateHintBtn()},50);
 }
 
+// ===== TIMED MODE =====
+let tmSize=8,tmTime=60;
+let timerInterval=null,timerRemaining=0,timerStarted=0;
+
+function renderTimed(){
+    let se=document.getElementById('tm-size');se.innerHTML='';
+    [4,5,6,7,8,9,10,11,12].forEach(s=>{
+        let b=document.createElement('button');b.textContent=s+'\u00d7'+s;
+        if(s===tmSize)b.classList.add('on');
+        b.addEventListener('click',()=>{tmSize=s;renderTimed()});
+        se.appendChild(b);
+    });
+    let te=document.getElementById('tm-time');te.innerHTML='';
+    [30,60,90,120,180].forEach(t=>{
+        let b=document.createElement('button');
+        b.textContent=t<60?t+'s':fmtTime(t);
+        if(t===tmTime)b.classList.add('on');
+        b.addEventListener('click',()=>{tmTime=t;renderTimed()});
+        te.appendChild(b);
+    });
+    let key=tmSize+'_'+tmTime;
+    let best=GS.bestTimes[key];
+    let be=document.getElementById('tm-best');
+    be.textContent=best?'Miglior tempo: '+fmtTime(best):'Nessun record';
+}
+
+function fmtTime(sec){
+    let m=Math.floor(sec/60),s=Math.floor(sec%60);
+    return m+':'+String(s).padStart(2,'0');
+}
+
+function startTimed(){
+    gameMode='timed';SZ=tmSize;
+    let seed=Date.now()^(Math.random()*1e9|0);
+    let puz=genPuzzle(SZ,seed,2);
+    if(!puz){alert('Riprova');return}
+    zones=puz.zones;curSolution=puz.solution;
+    grid=Array.from({length:SZ},()=>Array(SZ).fill(0));
+    zLvl=0;
+    document.getElementById('g-title').textContent='\u23f1\ufe0f Sfida \u00b7 '+SZ+'\u00d7'+SZ;
+    document.getElementById('g-goal').textContent=SZ;
+    document.getElementById('gr').style.gridTemplateColumns='repeat('+SZ+',1fr)';
+    resetTheme();
+    showScreen('game');
+    timerRemaining=tmTime;timerStarted=Date.now();
+    showTimerEl(true);updateTimerDisplay();
+    timerInterval=setInterval(()=>{
+        let elapsed=(Date.now()-timerStarted)/1000;
+        timerRemaining=tmTime-elapsed;
+        if(timerRemaining<=0){timerRemaining=0;stopTimer();timeUp();return}
+        updateTimerDisplay();
+    },200);
+    setTimeout(()=>{render();updateSC();updateHintBtn()},50);
+}
+
+function showTimerEl(show){
+    let el=document.getElementById('g-timer');
+    if(show)el.classList.add('active');
+    else el.classList.remove('active','danger');
+}
+
+function updateTimerDisplay(){
+    let el=document.getElementById('g-timer');
+    el.textContent=fmtTime(Math.ceil(timerRemaining));
+    if(timerRemaining<=10)el.classList.add('danger');
+    else el.classList.remove('danger');
+}
+
+function stopTimer(){
+    if(timerInterval){clearInterval(timerInterval);timerInterval=null}
+}
+
+function timeUp(){
+    let ov=document.createElement('div');
+    ov.className='timeup-overlay';
+    ov.innerHTML=`<div class="timeup-text">Tempo Scaduto!</div>
+        <div class="timeup-sub">Non hai completato il puzzle in tempo</div>
+        <button class="abtn sec" style="width:auto;padding:10px 30px;margin-top:8px" id="tu-retry">\u21bb Riprova</button>
+        <button class="abtn primary" style="width:auto;padding:10px 30px" id="tu-exit">\u2190 Menu</button>`;
+    document.getElementById('scr-game').appendChild(ov);
+    document.getElementById('tu-retry').addEventListener('click',()=>{ov.remove();startTimed()});
+    document.getElementById('tu-exit').addEventListener('click',()=>{ov.remove();exitGame()});
+}
+
 function exitGame(){
+    stopTimer();showTimerEl(false);resetTheme();
     if(gameMode==='campaign')showLevels(gameCh);
+    else if(gameMode==='timed')showScreen('timed');
     else showScreen('freeplay');
 }
 
-// Get current star SVG (chapter star in campaign, active skin in free play)
+// Get current star SVG
 function getStarSVG(){
-    if(gameMode==='campaign'){
-        return CH_STARS[gameCh].svg;
-    }
+    if(gameMode==='campaign')return CH_STARS[gameCh].svg;
     let skin=SKINS.find(s=>s.id===GS.activeSkin)||SKINS[0];
     return skin.svg;
 }
 
-// Get zone color based on game mode
 function getZoneColor(z){
-    if(gameMode==='campaign'){
-        return CHAPS[gameCh].zc[z%CHAPS[gameCh].zc.length];
-    }
+    if(gameMode==='campaign')return CHAPS[gameCh].zc[z%CHAPS[gameCh].zc.length];
     const defColors=['#FFB6C1','#B0E0E6','#DDA0DD','#F0E68C','#98FB98','#FFD700','#FFA07A','#87CEEB','#E6E6FA','#F4A460','#ABEBC6','#D7BDE2'];
     return defColors[z%defColors.length];
 }
@@ -561,13 +731,13 @@ function render(){
         let tZ=r===0||zones[r-1][c]!==z,bZ=r===SZ-1||zones[r+1][c]!==z;
         let lZ=c===0||zones[r][c-1]!==z,rZ=c===SZ-1||zones[r][c+1]!==z;
         d.style.borderStyle='solid';
-        d.style.borderWidth=`${tZ?zb:ib}px ${rZ?zb:ib}px ${bZ?zb:ib}px ${lZ?zb:ib}px`;
-        d.style.borderColor=`${tZ?'var(--zone-b)':'var(--inner-b)'} ${rZ?'var(--zone-b)':'var(--inner-b)'} ${bZ?'var(--zone-b)':'var(--inner-b)'} ${lZ?'var(--zone-b)':'var(--inner-b)'}`;
+        d.style.borderWidth=(tZ?zb:ib)+'px '+(rZ?zb:ib)+'px '+(bZ?zb:ib)+'px '+(lZ?zb:ib)+'px';
+        d.style.borderColor=(tZ?'var(--zone-b)':'var(--inner-b)')+' '+(rZ?'var(--zone-b)':'var(--inner-b)')+' '+(bZ?'var(--zone-b)':'var(--inner-b)')+' '+(lZ?'var(--zone-b)':'var(--inner-b)');
 
         let inner='';
-        if(grid[r][c]===2)inner=`<div class="cw"><svg class="st" viewBox="0 0 24 24">${starSvg.match(/<svg[^>]*>([\s\S]*)<\/svg>/)[1]}</svg></div>`;
-        else if(grid[r][c]===1)inner=`<div class="cw"><span class="mx" style="font-size:${xSize}">×</span></div>`;
-        else if(grid[r][c]===3)inner=`<div class="cw"><span class="mx au" style="font-size:${xSize}">×</span></div>`;
+        if(grid[r][c]===2)inner='<div class="cw"><svg class="st" viewBox="0 0 24 24">'+starSvg.match(/<svg[^>]*>([\s\S]*)<\/svg>/)[1]+'</svg></div>';
+        else if(grid[r][c]===1)inner='<div class="cw"><span class="mx" style="font-size:'+xSize+'">&#215;</span></div>';
+        else if(grid[r][c]===3)inner='<div class="cw"><span class="mx au" style="font-size:'+xSize+'">&#215;</span></div>';
         d.innerHTML=inner;
         d.addEventListener('click',tap);
         el.appendChild(d);
@@ -585,7 +755,6 @@ function tap(e){
 }
 
 function isBlocked(r,c,sr,sc){
-    // Same row, column, zone, or adjacent (including diagonal)
     return r===sr||c===sc||zones[r][c]===zones[sr][sc]||(Math.abs(r-sr)<=1&&Math.abs(c-sc)<=1);
 }
 
@@ -633,20 +802,16 @@ function sizeGrid(){
 function check(){
     let stars=[];
     for(let r=0;r<SZ;r++)for(let c=0;c<SZ;c++)if(grid[r][c]===2)stars.push([r,c]);
-    if(stars.length!==SZ){showMsg(`Servono ${SZ} stelle! Hai: ${stars.length}`,'err');return}
+    if(stars.length!==SZ){showMsg('Servono '+SZ+' stelle! Hai: '+stars.length,'err');return}
     let ok=true;
-    // Check rows
     for(let r=0;r<SZ;r++){let n=0;for(let c=0;c<SZ;c++)if(grid[r][c]===2)n++;
         if(n!==1){ok=false;for(let c=0;c<SZ;c++)if(grid[r][c]===2)mErr(r,c)}}
-    // Check columns
     for(let c=0;c<SZ;c++){let n=0;for(let r=0;r<SZ;r++)if(grid[r][c]===2)n++;
         if(n!==1){ok=false;for(let r=0;r<SZ;r++)if(grid[r][c]===2)mErr(r,c)}}
-    // Check zones
     let zc={};
     for(let r=0;r<SZ;r++)for(let c=0;c<SZ;c++)if(grid[r][c]===2)zc[zones[r][c]]=(zc[zones[r][c]]||0)+1;
     for(let z=0;z<SZ;z++)if((zc[z]||0)!==1){ok=false;
         for(let r=0;r<SZ;r++)for(let c=0;c<SZ;c++)if(zones[r][c]===z&&grid[r][c]===2)mErr(r,c)}
-    // Check adjacency (no two stars touching, including diagonals)
     for(let i=0;i<stars.length;i++)for(let j=i+1;j<stars.length;j++){
         if(Math.abs(stars[i][0]-stars[j][0])<=1&&Math.abs(stars[i][1]-stars[j][1])<=1){
             ok=false;mErr(stars[i][0],stars[i][1]);mErr(stars[j][0],stars[j][1]);
@@ -657,34 +822,46 @@ function check(){
 }
 
 function winLevel(){
+    stopTimer();
     if(gameMode==='campaign'){
         completeLevel(gameCh,gameLv);
         updateBalances();
     }
-    // Show win overlay
     let ov=document.createElement('div');
     ov.className='win-overlay';
     let chDone=gameMode==='campaign'&&isChapterDone(gameCh);
-    let winSub=gameMode==='campaign'?'+1 🪐'+(chDone?' + ⭐ '+CH_STARS[gameCh].name+' sbloccata!':''):'Ottimo lavoro!';
-    ov.innerHTML=`<div class="win-planet">${chDone&&gameMode==='campaign'?CH_STARS[gameCh].svg:PLANET_SVG}</div>
-        <div class="win-text">🎉 Completato!</div>
-        <div class="win-sub">${winSub}</div>
-        <button class="abtn primary" style="width:auto;padding:10px 30px;margin-top:8px" id="win-next">Continua</button>`;
+    let winSub='';
+    if(gameMode==='campaign'){
+        winSub='+1 \u{1FA90}'+(chDone?' + \u2b50 '+CH_STARS[gameCh].name+' sbloccata!':'');
+    }else if(gameMode==='timed'){
+        let elapsed=Math.round((Date.now()-timerStarted)/1000);
+        let key=tmSize+'_'+tmTime;
+        let isRecord=!GS.bestTimes[key]||elapsed<GS.bestTimes[key];
+        if(isRecord){GS.bestTimes[key]=elapsed;saveState()}
+        let reward=Math.ceil(SZ/3)+(timerRemaining>tmTime/2?2:timerRemaining>tmTime/4?1:0);
+        GS.planets+=reward;saveState();updateBalances();
+        winSub='Tempo: '+fmtTime(elapsed)+(isRecord?' \u00b7 Nuovo record!':'')+' \u00b7 +'+reward+' \u{1FA90}';
+    }else{
+        winSub='Ottimo lavoro!';
+    }
+    ov.innerHTML='<div class="win-planet">'+(chDone&&gameMode==='campaign'?CH_STARS[gameCh].svg:PLANET_SVG)+'</div>'
+        +'<div class="win-text">\u{1F389} Completato!</div>'
+        +'<div class="win-sub">'+winSub+'</div>'
+        +'<button class="abtn primary" style="width:auto;padding:10px 30px;margin-top:8px" id="win-next">Continua</button>';
     document.getElementById('scr-game').appendChild(ov);
     document.getElementById('win-next').addEventListener('click',()=>{
         ov.remove();
         if(gameMode==='campaign'){
-            if(gameLv<5)startCampaignLevel(gameCh,gameLv+1);
+            let maxLv=CHAPS[gameCh].levels.length-1;
+            if(gameLv<maxLv)startCampaignLevel(gameCh,gameLv+1);
             else showLevels(gameCh);
-        }else startFreePlay();
+        }else if(gameMode==='timed')startTimed();
+        else startFreePlay();
     });
 }
 
 function mErr(r,c){let cells=document.querySelectorAll('.c');let cell=cells[r*SZ+c];if(cell){cell.classList.add('ec');setTimeout(()=>cell.classList.remove('ec'),500)}}
-function showMsg(t,cls){
-    let area=document.getElementById('g-msg-area');
-    area.innerHTML=`<div class="g-msg ${cls}">${t}</div>`;
-}
+function showMsg(t,cls){document.getElementById('g-msg-area').innerHTML='<div class="g-msg '+cls+'">'+t+'</div>'}
 function hideMsg(){document.getElementById('g-msg-area').innerHTML=''}
 
 // ===== SHOP =====
@@ -698,23 +875,23 @@ function renderShop(){
         let canBuy=!isChapterSkin&&!owned&&GS.planets>=skin.price;
         let d=document.createElement('div');d.className='skin-card';
         let btnClass,btnText,btnDisabled='';
-        if(active){btnClass='skin-btn equipped';btnText='✓ In uso'}
+        if(active){btnClass='skin-btn equipped';btnText='\u2713 In uso'}
         else if(owned){btnClass='skin-btn equip';btnText='Equipaggia'}
         else if(isChapterSkin){
             btnClass='skin-btn buy';
-            btnText=chapterComplete?'Sblocca':'🔒 '+CHAPS[skin.chapter].name;
+            btnText=chapterComplete?'Sblocca':'\u{1F512} '+CHAPS[skin.chapter].name;
             if(!chapterComplete)btnDisabled='disabled';
         }else{
             btnClass='skin-btn buy';
-            btnText=`🪐 ${skin.price}`;
+            btnText='\u{1FA90} '+skin.price;
             if(!canBuy)btnDisabled='disabled';
         }
         let subtitle=isChapterSkin
-            ?`Premio: completa ${CHAPS[skin.chapter].icon} ${CHAPS[skin.chapter].name}`
-            :(skin.price===0?'Gratuito':'Prezzo: '+skin.price+' 🪐');
-        d.innerHTML=`<div class="skin-prev">${skin.svg}</div>
-            <div class="skin-info"><h4>${skin.name}</h4><p>${subtitle}</p></div>
-            <button class="${btnClass}" ${btnDisabled}>${btnText}</button>`;
+            ?'Premio: completa '+CHAPS[skin.chapter].icon+' '+CHAPS[skin.chapter].name
+            :(skin.price===0?'Gratuito':'Prezzo: '+skin.price+' \u{1FA90}');
+        d.innerHTML='<div class="skin-prev">'+skin.svg+'</div>'
+            +'<div class="skin-info"><h4>'+skin.name+'</h4><p>'+subtitle+'</p></div>'
+            +'<button class="'+btnClass+'" '+btnDisabled+'>'+btnText+'</button>';
         d.querySelector('button').addEventListener('click',()=>{
             if(active)return;
             if(owned){GS.activeSkin=skin.id;saveState();renderShop()}
@@ -729,14 +906,14 @@ function renderShop(){
 function toggleTheme(){
     GS.dark=!GS.dark;
     document.body.classList.toggle('light',!GS.dark);
-    document.getElementById('tb').textContent=GS.dark?'☀️':'🌙';
+    document.getElementById('tb').textContent=GS.dark?'\u2600\ufe0f':'\u{1F319}';
     saveState();
 }
 
 // ===== INIT =====
 loadState();
 if(!GS.dark)document.body.classList.add('light');
-else document.getElementById('tb').textContent='☀️';
+else document.getElementById('tb').textContent='\u2600\ufe0f';
 updateBalances();
 window.addEventListener('resize',()=>sizeGrid());
 </script>
