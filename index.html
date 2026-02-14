@@ -858,18 +858,21 @@ function getZoneColor(z){
 function render(){
     let el=document.getElementById('gr');el.innerHTML='';
     let starSvg=getStarSVG();
-    let zb=1.5,ib=.8;
     let xSize=Math.max(9,Math.min(18,280/SZ))+'px';
     for(let r=0;r<SZ;r++)for(let c=0;c<SZ;c++){
         let d=document.createElement('div'),z=zones[r][c];
         d.className='c';d.dataset.r=r;d.dataset.c=c;
         d.style.background=getZoneColor(z);
+        d.style.border='.5px solid var(--inner-b)';
 
         let tZ=r===0||zones[r-1][c]!==z,bZ=r===SZ-1||zones[r+1][c]!==z;
         let lZ=c===0||zones[r][c-1]!==z,rZ=c===SZ-1||zones[r][c+1]!==z;
-        d.style.borderStyle='solid';
-        d.style.borderWidth=(tZ?zb:ib)+'px '+(rZ?zb:ib)+'px '+(bZ?zb:ib)+'px '+(lZ?zb:ib)+'px';
-        d.style.borderColor=(tZ?'var(--zone-b)':'var(--inner-b)')+' '+(rZ?'var(--zone-b)':'var(--inner-b)')+' '+(bZ?'var(--zone-b)':'var(--inner-b)')+' '+(lZ?'var(--zone-b)':'var(--inner-b)');
+        let sh=[];
+        if(tZ)sh.push('inset 0 1.5px 0 0 var(--zone-b)');
+        if(bZ)sh.push('inset 0 -1.5px 0 0 var(--zone-b)');
+        if(lZ)sh.push('inset 1.5px 0 0 0 var(--zone-b)');
+        if(rZ)sh.push('inset -1.5px 0 0 0 var(--zone-b)');
+        if(sh.length)d.style.boxShadow=sh.join(',');
 
         let inner='';
         if(grid[r][c]===2)inner='<div class="cw"><svg class="st" viewBox="0 0 24 24">'+starSvg.match(/<svg[^>]*>([\s\S]*)<\/svg>/)[1]+'</svg></div>';
